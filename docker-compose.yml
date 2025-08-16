@@ -5,14 +5,14 @@ services:
       args:
         - BUILD_DEVELOPMENT=development
     restart: always
-    command: yarn dev  # uncomment for dev mode
+    command: npm run dev  # uncomment for dev mode
     ports:
       - 3000:3000
     volumes:
       - ./web/src:/web/src
       - ./web/public:/public
-    env_file:
-      - ./web/.env
+    # env_file:
+    #   - ./web/.env
 
   nginx:
     build: ./nginx

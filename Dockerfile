@@ -14,25 +14,25 @@ WORKDIR /web
 # Copy package.json
 # to the /app working directory
 COPY ./web/package.json /web
-COPY ./web/yarn.lock /web
+COPY ./web/package-lock.json /web
 
 # Install dependencies in /app
-RUN yarn install
+RUN npm ci
 
 # Copy the rest of our Next.js folder into /app
 COPY web /web
 
-# determine whether to run yarn build or yarn dev from argument - passed from docker-compose.yml
+# determine whether to run npm run build or npm run dev from argument - passed from docker-compose.yml
 ARG BUILD_DEVELOPMENT=production
 ENV NODE_ENV=$BUILD_DEVELOPMENT
 
-# whether to yarn build or nah
+# whether to npm run build or nah
 RUN if [ "$NODE_ENV" = "production" ]; \
-    then yarn build; \
+    then npm run build; \
     fi
 
 # Ensure port 3000 is accessible to our system
 EXPOSE 3000
 
 # CMD gets overridden if docker-compose defines `command`
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
